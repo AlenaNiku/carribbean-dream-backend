@@ -14,6 +14,21 @@ module Api
 
                 render json: ResortSerializer.new(resort).serialized_json
             end
+
+            #create a new resort
+            def create
+                resort = Resort.new(resort_params)
+
+                if resort.save
+                    render json: ResortSerializer.new(resort).serialized_json
+                else 
+                    render json: { error: resort.errors.messages }, status: 422
+                end
+            end
+
+            def resort_params
+                params.require(:resort).permit(:name, :image_url)
+            end
         end
     end
 end
