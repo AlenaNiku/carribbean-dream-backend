@@ -6,7 +6,7 @@ module Api
             def index
                 resorts = Resort.all 
 
-                render json: ResortSerializer.new(resorts).serialized_json
+                render json: ResortSerializer.new(resorts, options).serialized_json
             end
 
             # GET /api/v1/resorts/:slug
@@ -14,7 +14,7 @@ module Api
             def show
                 resort = Resort.find_by(slug: params[:slug])
 
-                render json: ResortSerializer.new(resort).serialized_json
+                render json: ResortSerializer.new(resort, options).serialized_json
             end
 
             # POST /api/v1/resorts
@@ -35,7 +35,7 @@ module Api
                 resort = Resort.find_by(slug: params[:slug])
 
                 if resort.update(resort_params)
-                    render json: ResortSerializer.new(resort).serialized_json
+                    render json: ResortSerializer.new(resort, options).serialized_json
                 else 
                     render json: { error: resort.errors.messages }, status: 422
                 end
