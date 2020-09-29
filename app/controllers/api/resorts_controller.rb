@@ -37,6 +37,16 @@ module Api
                 end
             end
 
+            #destroy a resort
+            def destroy
+                resort = Resort.find_by(slug: params[:slug])
+
+                if resort.destroy
+                    head :no_content
+                else 
+                    render json: { error: resort.errors.messages }, status: 422
+                end
+            end
 
             #strong params
             def resort_params
