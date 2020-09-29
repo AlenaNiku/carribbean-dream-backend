@@ -2,12 +2,14 @@ module Api
     module V1
         class ResortsController < ApplicationController
             #rendering all resorts
+            # GET /api/v1/resorts
             def index
                 resorts = Resort.all 
 
                 render json: ResortSerializer.new(resorts).serialized_json
             end
 
+            # GET /api/v1/resorts/:slug
             #rendering individual resort
             def show
                 resort = Resort.find_by(slug: params[:slug])
@@ -15,6 +17,7 @@ module Api
                 render json: ResortSerializer.new(resort).serialized_json
             end
 
+            # POST /api/v1/resorts
             #create a new resort
             def create
                 resort = Resort.new(resort_params)
@@ -26,6 +29,7 @@ module Api
                 end
             end
 
+            # PATCH /api/v1/airlines/:slug
             #update a resort
             def update
                 resort = Resort.find_by(slug: params[:slug])
@@ -37,6 +41,7 @@ module Api
                 end
             end
 
+            # DELETE /api/v1/resorts/:slug
             #destroy a resort
             def destroy
                 resort = Resort.find_by(slug: params[:slug])
@@ -48,9 +53,16 @@ module Api
                 end
             end
 
-            #strong params
+            #private methods
+            private 
+            
             def resort_params
                 params.require(:resort).permit(:name, :image_url)
+            end
+
+            # Used For compound documents with fast_jsonapi
+            def options
+                @options ||= { include: %i[reviews] } 
             end
         end
     end
