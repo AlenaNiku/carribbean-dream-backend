@@ -26,6 +26,19 @@ module Api
                 end
             end
 
+            #update a resort
+            def update
+                resort = Resort.find_by(slug: params[:slug])
+
+                if resort.update(resort_params)
+                    render json: ResortSerializer.new(resort).serialized_json
+                else 
+                    render json: { error: resort.errors.messages }, status: 422
+                end
+            end
+
+
+            #strong params
             def resort_params
                 params.require(:resort).permit(:name, :image_url)
             end
