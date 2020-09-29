@@ -1,6 +1,6 @@
 module Api
     module V1
-        class ReviewsController < ApplicationController
+        class ReviewsController < ApiController
 
             # POST /api/v1/reviews
             def create

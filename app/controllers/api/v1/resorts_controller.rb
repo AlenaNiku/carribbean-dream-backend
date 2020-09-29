@@ -1,6 +1,6 @@
 module Api
     module V1
-        class ResortsController < ApplicationController
+        class ResortsController < ApiController
             #rendering all resorts
             # GET /api/v1/resorts
             def index
